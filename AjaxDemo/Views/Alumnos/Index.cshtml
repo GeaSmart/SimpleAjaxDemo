@@ -1,0 +1,16 @@
+﻿@model AjaxDemo.Models.Alumno
+
+<div class="row">
+    <div class="col-md-8 col-lg-offset-4">
+        <h2>Añadir Alumno</h2>
+        <br />
+        
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(x=>x.Id, new {@class = "control-label col-md-2"})
+                @Html.TextBoxFor(x => x.Id, new { @class = "form-control col-md-10"})
+                
+            </div>
+        </div>           
+    </div>
+</div>
