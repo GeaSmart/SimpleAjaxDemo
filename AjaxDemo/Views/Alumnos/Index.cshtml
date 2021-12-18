@@ -4,13 +4,97 @@
     <div class="col-md-8 col-lg-offset-4">
         <h2>Añadir Alumno</h2>
         <br />
-        
         <div class="form-group">
-            <div class="row">
-                @Html.LabelFor(x=>x.Id, new {@class = "control-label col-md-2"})
-                @Html.TextBoxFor(x => x.Id, new { @class = "form-control col-md-10"})
-                
+            <div class="form-row">
+                @Html.LabelFor(x => x.Id, new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(x => x.Id, new { @class = "form-control col-md-6", type = "number" })
             </div>
-        </div>           
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                @Html.LabelFor(x => x.Nombres, new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(x => x.Nombres, new { @class = "form-control col-md-6" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                @Html.LabelFor(x => x.Apellidos, new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(x => x.Apellidos, new { @class = "form-control col-md-6" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                @Html.LabelFor(x => x.Aula, new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(x => x.Aula, new { @class = "form-control col-md-6" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-2">
+                    
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary" onclick="SendAlumno()">Enviar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <h2>Lista de Alumnos</h2>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Aula</th>
+                </tr>
+            </thead>
+            <tbody id="contenidoTablaAlumnos">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function SendAlumno() {
+        
+        var id = $("#Id").val();
+        var nombres = $("#Nombres").val();
+        var apellidos = $("#Apellidos").val();
+        var aula = $("#Aula").val();
+
+        let alumno = {};
+        alumno.Id = id;
+        alumno.Nombres = nombres;
+        alumno.Apellidos = apellidos;
+        alumno.Aula = aula;
+              
+
+        $.ajax({
+            type: 'POST',
+            url: '/Alumnos/AddAlumno',
+            data: JSON.stringify(alumno),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (result) {
+                $("#contenidoTablaAlumnos").append(
+                    '<tr><th scope="row">' + result.id + '</th>' +
+                    '<td>' + result.nombres + '</td>' +
+                    '<td>' + result.apellidos + '</td>' +
+                    '<td>' + result.aula + '</td></tr>'
+                )                
+            },
+            error: function () {
+                alert("error!")
+            }
+        })
+        //console.log("str" + JSON.stringify(alumno));
+
+    }
+</script>

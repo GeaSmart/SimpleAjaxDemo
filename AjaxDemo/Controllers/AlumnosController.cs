@@ -1,5 +1,6 @@
 ﻿using AjaxDemo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,14 @@ namespace AjaxDemo.Controllers
     {
         public ActionResult Index()
         {
+            //Alumno alumno = new Alumno();
             return View();
         }
-        public ActionResult AddAlumno(Alumno alumno)
+
+        [HttpPost]
+        public ActionResult AddAlumno([FromBody]Alumno alumno)
         {
-            //return Json(alumno, JsonRequestBehavior.AllowGet);
-            return Json(alumno, new Newtonsoft.Json.JsonSerializerSettings());
+            return Json(alumno);
         }
     }
 }
